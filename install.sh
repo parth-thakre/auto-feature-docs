@@ -82,18 +82,6 @@ get_source_dir() {
     echo "$script_dir/commands/$tool"
 }
 
-# Function to get destination directory
-get_destination() {
-    local tool=$1
-    local custom_dest=$2
-    
-    if [[ -n "$custom_dest" ]]; then
-        echo "$custom_dest"
-    else
-        echo "${TOOL_CONFIGS[$tool]}"
-    fi
-}
-
 # Function to count commands
 count_commands() {
     local source_dir=$1
@@ -187,7 +175,7 @@ main() {
     validate_tool "$TOOL"
     
     # Get destination
-    DEST=$(get_destination "$TOOL" "$DEST")
+    DEST=${DEST:-${TOOL_CONFIGS[$TOOL]}}
     
     print_status "Tool: $TOOL"
     print_status "Destination: $DEST"
